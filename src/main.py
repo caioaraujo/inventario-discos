@@ -5,11 +5,17 @@ import configparser
 
 def main():
     filepath = get_file_path("setup.ini")
+    return get_file_content(filepath)
+
+
+def get_file_content(filepath):
     reader = PdfReader(filepath)
     total_pages = len(reader.pages)
+    full_content = ""
     for index_page in range(total_pages):
         page = reader.pages[index_page]
-        print(page.extract_text())
+        full_content += page.extract_text() + "\n"
+    return full_content
 
 
 def get_file_path(ini_file):
