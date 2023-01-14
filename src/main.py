@@ -1,11 +1,29 @@
 from PyPDF2 import PdfReader
 
 import configparser
+import sys
+
+PRINT = 1
+EXIT = 2
 
 
 def main():
-    filepath = get_file_path("setup.ini")
-    return get_file_content(filepath)
+    print("Olá! Escolha uma das opções:\n")
+    received_input = 0
+    while received_input != EXIT:
+        try:
+            received_input = int(input("1-Ler PDF\n2-Sair"))
+        except ValueError:
+            print("opção inválida.\n")
+            continue
+        if received_input not in (PRINT, EXIT):
+            print("opção inválida.\n")
+        if received_input == EXIT:
+            sys.exit(0)
+        if received_input == PRINT:
+            filepath = get_file_path("setup.ini")
+            print(get_file_content(filepath))
+            continue
 
 
 def get_file_content(filepath):
