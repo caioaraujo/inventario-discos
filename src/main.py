@@ -4,7 +4,8 @@ import configparser
 import sys
 
 PRINT = 1
-EXIT = 2
+ADD = 2
+EXIT = 3
 
 
 def main():
@@ -12,17 +13,20 @@ def main():
     received_input = 0
     while received_input != EXIT:
         try:
-            received_input = int(input("1-Ler PDF\n2-Sair"))
+            received_input = int(input("1-Ler PDF\n2-Adicionar entrada\n3-Sair\n"))
         except ValueError:
             print("opção inválida.\n")
             continue
-        if received_input not in (PRINT, EXIT):
+        if received_input not in (PRINT, ADD, EXIT):
             print("opção inválida.\n")
         if received_input == EXIT:
             sys.exit(0)
         if received_input == PRINT:
             filepath = get_file_path("setup.ini")
             print(get_file_content(filepath))
+            continue
+        if received_input == ADD:
+            print("em construção")
             continue
 
 
