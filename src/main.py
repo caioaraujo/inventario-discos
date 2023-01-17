@@ -2,6 +2,7 @@ import configparser
 import re
 import sys
 
+INI_PATH = "../setup.ini"
 PRINT = 1
 ADD = 2
 CREATE_DATABASE = 3
@@ -13,7 +14,7 @@ def main():
     received_input = 0
     while received_input != EXIT:
         try:
-            received_input = int(input("1-Ler PDF\n2-Adicionar entrada\n3-Criar banco de dados\n4-Sair\n"))
+            received_input = int(input("1-Ler arquivo\n2-Adicionar entrada\n3-Criar banco de dados\n4-Sair\n"))
         except ValueError:
             print("opção inválida.\n")
             continue
@@ -22,7 +23,7 @@ def main():
         if received_input == EXIT:
             sys.exit(0)
         if received_input == PRINT:
-            filepath = get_file_path("../setup.ini")
+            filepath = get_file_path(INI_PATH)
             print(get_file_content(filepath))
             continue
         if received_input == ADD:
@@ -34,7 +35,7 @@ def main():
 
 
 def create_database():
-    filepath = get_file_path("setup.ini")
+    filepath = get_file_path(INI_PATH)
     filecontent = get_file_content(filepath)
     flat_filecontent = filecontent.replace('\n', ' ').replace(u'\xa0', u' ')
     numbers = get_numbers(flat_filecontent)
@@ -82,7 +83,7 @@ def get_file_content(filepath):
 def get_file_path(ini_file):
     config = configparser.ConfigParser()
     config.read(ini_file)
-    return config.get('filepath', 'pdf')
+    return config.get('filepath', 'path')
 
 
 if __name__ == '__main__':
