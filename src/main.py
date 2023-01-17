@@ -49,7 +49,8 @@ def create_database():
 
 
 def get_numbers(filecontent):
-    return re.findall(r"Nº:(.*?)Título", filecontent)
+    numbers = re.findall(r"Nº:(.*?)Título", filecontent)
+    return apply_strip(numbers)
 
 
 def get_titles(filecontent):
@@ -57,7 +58,7 @@ def get_titles(filecontent):
     alt_title = re.findall(r"Título :(.*?)Intérpr", filecontent)
     if alt_title:
         titles.append(alt_title)
-    return titles
+    return apply_strip(titles)
 
 
 def get_interpreters(filecontent):
@@ -65,18 +66,19 @@ def get_interpreters(filecontent):
     alt_interpreters = re.findall(r"Intérpretes :(.*?)Data", filecontent)
     if alt_interpreters:
         interpreters.append(alt_interpreters)
-    return interpreters
+    return apply_strip(interpreters)
 
 
 def get_dates(filecontent):
-    return re.findall(r"Data:(.*?)\| Volumes", filecontent)
+    dates = re.findall(r"Data:(.*?)\| Volumes", filecontent)
+    return apply_strip(dates)
 
 
 def get_volumes(filecontent):
     volumes = re.findall(r"Volumes:(.*?)Nº:", filecontent)
     last_volume = re.split(r"Volumes:", filecontent)[-1]
     volumes.append(last_volume)
-    return volumes
+    return apply_strip(volumes)
 
 
 def get_file_content(filepath):
@@ -88,6 +90,10 @@ def get_file_path(ini_file):
     config = configparser.ConfigParser()
     config.read(ini_file)
     return config.get('filepath', 'path')
+
+
+def apply_strip(items):
+    return list(map(str.strip, items))
 
 
 if __name__ == '__main__':
