@@ -48,3 +48,4 @@ class TestMain(unittest.TestCase):
         expected = ["1", "1", "1"]
         volumes = main.get_volumes(self.file_content)
         self.assertEqual(3, len(volumes))
+        self.assertEqual(expected, volumes)
