@@ -43,6 +43,7 @@ def create_database():
     interpreters = get_interpreters(flat_filecontent)
     dates = get_dates(flat_filecontent)
     volumes = get_volumes(flat_filecontent)
+    assert len(numbers) == len(titles) == len(interpreters) == len(dates) == len(volumes)
     all = zip(numbers, titles, interpreters, dates, volumes)
     tuple(all)
 
@@ -72,7 +73,10 @@ def get_dates(filecontent):
 
 
 def get_volumes(filecontent):
-    return re.findall(r"Volumes:(.*?)Nº:", filecontent)
+    volumes = re.findall(r"Volumes:(.*?)Nº:", filecontent)
+    last_volume = re.split(r"Volumes:", filecontent)[-1]
+    volumes.append(last_volume)
+    return volumes
 
 
 def get_file_content(filepath):
