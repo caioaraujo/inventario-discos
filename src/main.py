@@ -1,11 +1,11 @@
-from PyPDF2 import PdfReader
-
 import configparser
+import re
 import sys
 
 PRINT = 1
 ADD = 2
-EXIT = 3
+CREATE_DATABASE = 3
+EXIT = 4
 
 
 def main():
@@ -13,31 +13,70 @@ def main():
     received_input = 0
     while received_input != EXIT:
         try:
-            received_input = int(input("1-Ler PDF\n2-Adicionar entrada\n3-Sair\n"))
+            received_input = int(input("1-Ler PDF\n2-Adicionar entrada\n3-Criar banco de dados\n4-Sair\n"))
         except ValueError:
             print("opção inválida.\n")
             continue
-        if received_input not in (PRINT, ADD, EXIT):
+        if received_input not in (PRINT, ADD, CREATE_DATABASE, EXIT):
             print("opção inválida.\n")
         if received_input == EXIT:
             sys.exit(0)
         if received_input == PRINT:
-            filepath = get_file_path("setup.ini")
+            filepath = get_file_path("../setup.ini")
             print(get_file_content(filepath))
             continue
         if received_input == ADD:
             print("em construção")
             continue
+        if received_input == CREATE_DATABASE:
+            create_database()
+            return
+
+
+def create_database():
+    filepath = get_file_path("setup.ini")
+    filecontent = get_file_content(filepath)
+    flat_filecontent = filecontent.replace('\n', ' ').replace(u'\xa0', u' ')
+    numbers = get_numbers(flat_filecontent)
+    titles = get_titles(flat_filecontent)
+    interpreters = get_interpreters(flat_filecontent)
+    dates = get_dates(flat_filecontent)
+    volumes = get_volumes(flat_filecontent)
+    all = zip(numbers, titles, interpreters, dates, volumes)
+    tuple(all)
+
+
+def get_numbers(filecontent):
+    return re.findall(r"Nº:(.*?)Título", filecontent)
+
+
+def get_titles(filecontent):
+    titles = re.findall(r"Título:(.*?)Intérpr", filecontent)
+    alt_title = re.findall(r"Título :(.*?)Intérpr", filecontent)
+    if alt_title:
+        titles.append(alt_title)
+    return titles
+
+
+def get_interpreters(filecontent):
+    interpreters = re.findall(r"Intérpretes:(.*?)Data", filecontent)
+    alt_interpreters = re.findall(r"Intérpretes :(.*?)Data", filecontent)
+    if alt_interpreters:
+        interpreters.append(alt_interpreters)
+    return interpreters
+
+
+def get_dates(filecontent):
+    return re.findall(r"Data:(.*?)\| Volumes", filecontent)
+
+
+def get_volumes(filecontent):
+    return re.findall(r"Volumes:(.*?)Nº:", filecontent)
 
 
 def get_file_content(filepath):
-    reader = PdfReader(filepath)
-    total_pages = len(reader.pages)
-    full_content = ""
-    for index_page in range(total_pages):
-        page = reader.pages[index_page]
-        full_content += page.extract_text() + "\n"
-    return full_content
+    with open(filepath, 'r') as file:
+        return " ".join(file.readlines())
 
 
 def get_file_path(ini_file):
