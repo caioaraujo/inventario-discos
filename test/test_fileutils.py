@@ -1,11 +1,13 @@
 import unittest
+from unittest import mock
 
-from src import main
+from src import fileutils
 
 
-class TestMain(unittest.TestCase):
+class TestFileUtils(unittest.TestCase):
 
     def setUp(self):
+        self.file_utils = fileutils.FileUtils
         self.file_content = (
             "Nº: CM.Dv.00063.022 | A - 35 Título: Adriana Intérpretes: Adriana Data: 1970 | Volumes: 1 "
             "Nº: CM.Dv.00064.022 | A - 36 Título: Adriana Intérpretes: Adriana Data: 1986 | Volumes: 1 "
@@ -13,39 +15,42 @@ class TestMain(unittest.TestCase):
         )
 
     def test_get_filepath(self):
-        filepath = main.get_file_path("./files/setup_test.ini")
+        filepath = self.file_utils.get_file_path("./files/setup_test.ini")
         self.assertEqual("C:/Documents/aaa.txt", filepath)
 
-    def test_get_file_content(self):
-        file_content = main.get_file_content("./files/teste.txt")
+    @mock.patch("src.fileutils.FileUtils.get_file_path", return_value="./files/teste.txt")
+    def test_get_file_content(self, mock_get_file_path):
+        ini_path = "./files/setup_test.ini"
+        file_content = self.file_utils.get_file_content(ini_path)
         self.assertEqual("Arquivo de teste.", file_content.strip())
-
-    def test_get_titles(self):
-        expected = ["Adriana", "Adriana", "Dom de Amar"]
-        titles = main.get_titles(self.file_content)
-        self.assertEqual(3, len(titles))
-        self.assertEqual(expected, titles)
+        mock_get_file_path.assert_called_once_with(ini_path)
 
     def test_get_numbers(self):
         expected = ["CM.Dv.00063.022 | A - 35", "CM.Dv.00064.022 | A - 36", "CM.Dv.00065.022 | A - 37"]
-        numbers = main.get_numbers(self.file_content)
+        numbers = self.file_utils.get_numbers(self.file_content)
         self.assertEqual(3, len(numbers))
         self.assertEqual(expected, numbers)
 
+    def test_get_titles(self):
+        expected = ["Adriana", "Adriana", "Dom de Amar"]
+        titles = self.file_utils.get_titles(self.file_content)
+        self.assertEqual(3, len(titles))
+        self.assertEqual(expected, titles)
+
     def test_get_interpreters(self):
         expected = ["Adriana", "Adriana", "Adriana"]
-        interpreters = main.get_interpreters(self.file_content)
+        interpreters = self.file_utils.get_interpreters(self.file_content)
         self.assertEqual(3, len(interpreters))
         self.assertEqual(expected, interpreters)
 
     def test_get_dates(self):
         expected = ["1970", "1986", "1988"]
-        dates = main.get_dates(self.file_content)
+        dates = self.file_utils.get_dates(self.file_content)
         self.assertEqual(3, len(dates))
         self.assertEqual(expected, dates)
 
     def test_get_volumes(self):
         expected = ["1", "1", "1"]
-        volumes = main.get_volumes(self.file_content)
+        volumes = self.file_utils.get_volumes(self.file_content)
         self.assertEqual(3, len(volumes))
         self.assertEqual(expected, volumes)
