@@ -15,12 +15,12 @@ class TestFileUtils(unittest.TestCase):
         )
 
     def test_get_filepath(self):
-        filepath = self.file_utils.get_file_path("./files/setup_test.ini")
+        filepath = self.file_utils.get_file_path("test/files/setup_test.ini")
         self.assertEqual("C:/Documents/aaa.txt", filepath)
 
-    @mock.patch("src.fileutils.FileUtils.get_file_path", return_value="./files/teste.txt")
+    @mock.patch("src.fileutils.FileUtils.get_file_path", return_value="test/files/teste.txt")
     def test_get_file_content(self, mock_get_file_path):
-        ini_path = "./files/setup_test.ini"
+        ini_path = "test/files/setup_test.ini"
         file_content = self.file_utils.get_file_content(ini_path)
         self.assertEqual("Arquivo de teste.", file_content.strip())
         mock_get_file_path.assert_called_once_with(ini_path)
@@ -54,3 +54,17 @@ class TestFileUtils(unittest.TestCase):
         volumes = self.file_utils.get_volumes(self.file_content)
         self.assertEqual(3, len(volumes))
         self.assertEqual(expected, volumes)
+
+    @mock.patch("src.fileutils.FileUtils.get_file_path", return_value="test/files/teste2.txt")
+    def test_get_file_content_as_tuple(self, mock_get_file_path):
+        expected = (
+            ("abc.123", "Let it Be", "The Beatles", "1969", "1"),
+            ("dfg.456", "Gita", "Raul Seixas", "1974", "1"),
+            ("hij.789", "The Beatles", "The Beatles", "1968", "2"),
+        )
+        ini_path = "./files/setup_test.ini"
+        result = self.file_utils.get_file_content_as_tuple(ini_path)
+        self.assertEqual(expected, result)
+        mock_get_file_path.assert_called_once_with(ini_path)
+
+

@@ -60,7 +60,7 @@ class FileUtils:
         volumes = FileUtils.get_volumes(flat_filecontent)
         if len(numbers) != len(titles) != len(interpreters) != len(dates) != len(volumes):
             raise Exception("Erro ao ler arquivo. A quantidade de dados está inconsistente")
-        return zip(numbers, titles, interpreters, dates, volumes)
+        return tuple(zip(numbers, titles, interpreters, dates, volumes))
 
     @staticmethod
     def _apply_strip(items):
