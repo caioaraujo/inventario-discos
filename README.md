@@ -15,7 +15,7 @@ A opção 3 lista os dados inseridos na base de dados.
 
 A opção 4 serve para adicionar uma nova entrada no arquivo.
 
-A opção 5 consulta um registro pelo número.
+A opção 5 consulta um registro pelo número sequencial.
 
 Por fim, a opção 6 finaliza o programa.
 
