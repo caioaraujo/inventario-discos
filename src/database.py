@@ -8,14 +8,14 @@ class Database:
         conn = sqlite3.connect("../db/inventario.db")
         cur = conn.cursor()
         Database._drop_table(cur)
-        cur.execute("CREATE TABLE inventario(number, title, interpreter, date, volume)")
+        cur.execute("CREATE TABLE inventario(number, title, interpreter, date, volume, note)")
         cur.close()
         conn.close()
 
     @staticmethod
     def insert_inventory(data):
         conn = sqlite3.connect("../db/inventario.db")
-        stmt = "insert into inventario (number, title, interpreter, date, volume) values (?, ?, ?, ?, ?)"
+        stmt = "insert into inventario (number, title, interpreter, date, volume, note) values (?, ?, ?, ?, ?, ?)"
         cur = conn.cursor()
         vals = data
         cur.executemany(stmt, vals)
@@ -27,8 +27,9 @@ class Database:
     def read_inventory():
         conn = sqlite3.connect("../db/inventario.db")
         cur = conn.cursor()
+        stmt = "SELECT number, title, interpreter, date, volume, note FROM inventario ORDER BY number"
         try:
-            for row in cur.execute("SELECT number, title, interpreter, date, volume FROM inventario ORDER BY number"):
+            for row in cur.execute(stmt):
                 print(row)
         except sqlite3.OperationalError:
             print("O banco de dados ainda não está criado. Favor criar o banco de dados")
@@ -49,8 +50,10 @@ class Database:
             "Título": res[1],
             "Intérpretes": res[2],
             "Data": res[3],
-            "Volumes": res[4]
+            "Volumes": res[4],
         }
+        if res[5]:
+            result["Observação"] = res[5]
         cur.close()
         conn.close()
 

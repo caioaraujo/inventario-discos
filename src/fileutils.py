@@ -43,11 +43,23 @@ class FileUtils:
         return FileUtils._apply_strip(dates)
 
     @staticmethod
-    def get_volumes(filecontent):
+    def get_volumes_and_notes(filecontent):
+        notes = []
+        cleaned_volumes = []
         volumes = re.findall(r"Volumes:(.*?)Nº:", filecontent)
         last_volume = re.split(r"Volumes:", filecontent)[-1]
         volumes.append(last_volume)
-        return FileUtils._apply_strip(volumes)
+        for value in volumes:
+            splitted_volume = value.split("Observação:")
+            cleaned_volumes.append(splitted_volume[0])
+            if len(splitted_volume) > 1:
+                note = splitted_volume[1]
+            else:
+                note = ""
+            notes.append(note)
+        cleaned_volumes = FileUtils._apply_strip(cleaned_volumes)
+        notes = FileUtils._apply_strip(notes)
+        return cleaned_volumes, notes
 
     @staticmethod
     def get_file_content_as_tuple(ini_path):
@@ -57,10 +69,10 @@ class FileUtils:
         titles = FileUtils.get_titles(flat_filecontent)
         interpreters = FileUtils.get_interpreters(flat_filecontent)
         dates = FileUtils.get_dates(flat_filecontent)
-        volumes = FileUtils.get_volumes(flat_filecontent)
-        if len(numbers) != len(titles) != len(interpreters) != len(dates) != len(volumes):
+        volumes, notes = FileUtils.get_volumes_and_notes(flat_filecontent)
+        if len(numbers) != len(titles) != len(interpreters) != len(dates) != len(volumes) != len(notes):
             raise Exception("Erro ao ler arquivo. A quantidade de dados está inconsistente")
-        return tuple(zip(numbers, titles, interpreters, dates, volumes))
+        return tuple(zip(numbers, titles, interpreters, dates, volumes, notes))
 
     @staticmethod
     def _apply_strip(items):

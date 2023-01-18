@@ -26,8 +26,6 @@ def main():
         except ValueError:
             print("opção inválida.\n")
             continue
-        if received_input not in (PRINT_FILE, ADD, CREATE_DATABASE, READ_TABLE, FETCH, EXIT):
-            print("opção inválida.\n")
         if received_input == EXIT:
             sys.exit(0)
         if received_input == PRINT_FILE:
@@ -46,6 +44,8 @@ def main():
             numero = input("Digite o número do registro que deseja consultar:\n")
             record = Database.fetch(numero)
             print(record)
+            continue
+        print("opção inválida.\n")
 
 
 def create_database():

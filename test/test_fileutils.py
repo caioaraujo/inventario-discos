@@ -10,7 +10,7 @@ class TestFileUtils(unittest.TestCase):
         self.file_utils = fileutils.FileUtils
         self.file_content = (
             "Nº: CM.Dv.00063.022 | A - 35 Título: Adriana Intérpretes: Adriana Data: 1970 | Volumes: 1 "
-            "Nº: CM.Dv.00064.022 | A - 36 Título: Adriana Intérpretes: Adriana Data: 1986 | Volumes: 1 "
+            "Nº: CM.Dv.00064.022 | A - 36 Título: Adriana Intérpretes: Adriana Data: 1986 | Volumes: 1 Observação: Em bom estado"
             "Nº: CM.Dv.00065.022 | A - 37 Título: Dom de Amar Intérpretes: Adriana Data: 1988 | Volumes: 1"
         )
 
@@ -49,18 +49,21 @@ class TestFileUtils(unittest.TestCase):
         self.assertEqual(3, len(dates))
         self.assertEqual(expected, dates)
 
-    def test_get_volumes(self):
-        expected = ["1", "1", "1"]
-        volumes = self.file_utils.get_volumes(self.file_content)
+    def test_get_volumes_and_notes(self):
+        expected_volumes = ["1", "1", "1"]
+        expected_notes = ["", "Em bom estado", ""]
+        volumes, notes = self.file_utils.get_volumes_and_notes(self.file_content)
         self.assertEqual(3, len(volumes))
-        self.assertEqual(expected, volumes)
+        self.assertEqual(3, len(notes))
+        self.assertEqual(expected_volumes, volumes)
+        self.assertEqual(expected_notes, notes)
 
     @mock.patch("src.fileutils.FileUtils.get_file_path", return_value="test/files/teste2.txt")
     def test_get_file_content_as_tuple(self, mock_get_file_path):
         expected = (
-            ("abc.123", "Let it Be", "The Beatles", "1969", "1"),
-            ("dfg.456", "Gita", "Raul Seixas", "1974", "1"),
-            ("hij.789", "The Beatles", "The Beatles", "1968", "2"),
+            ("abc.123", "Let it Be", "The Beatles", "1969", "1", ""),
+            ("dfg.456", "Gita", "Raul Seixas", "1974", "1", "Em bom estado"),
+            ("hij.789", "The Beatles", "The Beatles", "1968", "2", ""),
         )
         ini_path = "./files/setup_test.ini"
         result = self.file_utils.get_file_content_as_tuple(ini_path)
