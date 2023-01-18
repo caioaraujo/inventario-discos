@@ -1,4 +1,3 @@
-import re
 import sys
 
 from database import Database
@@ -6,10 +5,11 @@ from fileutils import FileUtils
 
 INI_PATH = "../setup.ini"
 PRINT_FILE = 1
-ADD = 2
-CREATE_DATABASE = 3
-READ_TABLE = 4
-EXIT = 5
+CREATE_DATABASE = 2
+READ_TABLE = 3
+ADD = 4
+FETCH = 5
+EXIT = 6
 
 
 def main():
@@ -18,22 +18,20 @@ def main():
     while received_input != EXIT:
         try:
             received_input = int(input("1-Ler arquivo\n"
-                                       "2-Adicionar entrada\n"
-                                       "3-Criar banco de dados\n"
-                                       "4-Listar a base de dados\n"
-                                       "5-Sair\n"))
+                                       "2-Criar banco de dados\n"
+                                       "3-Listar a base de dados\n"
+                                       "4-Adicionar entrada\n"
+                                       "5-Ler registro por número\n"
+                                       "6-Sair\n"))
         except ValueError:
             print("opção inválida.\n")
             continue
-        if received_input not in (PRINT_FILE, ADD, CREATE_DATABASE, READ_TABLE, EXIT):
+        if received_input not in (PRINT_FILE, ADD, CREATE_DATABASE, READ_TABLE, FETCH, EXIT):
             print("opção inválida.\n")
         if received_input == EXIT:
             sys.exit(0)
         if received_input == PRINT_FILE:
             print(FileUtils.get_file_content(INI_PATH))
-            continue
-        if received_input == ADD:
-            print("em construção")
             continue
         if received_input == CREATE_DATABASE:
             create_database()
@@ -41,20 +39,19 @@ def main():
         if received_input == READ_TABLE:
             Database.read_inventory()
             continue
+        if received_input == ADD:
+            print("em construção")
+            continue
+        if received_input == FETCH:
+            numero = input("Digite o número do registro que deseja consultar:\n")
+            record = Database.fetch(numero)
+            print(record)
 
 
 def create_database():
     Database.create_table()
-    filecontent = FileUtils.get_file_content(INI_PATH)
-    flat_filecontent = filecontent.replace('\n', ' ').replace(u'\xa0', u' ')
-    numbers = FileUtils.get_numbers(flat_filecontent)
-    titles = FileUtils.get_titles(flat_filecontent)
-    interpreters = FileUtils.get_interpreters(flat_filecontent)
-    dates = FileUtils.get_dates(flat_filecontent)
-    volumes = FileUtils.get_volumes(flat_filecontent)
-    assert len(numbers) == len(titles) == len(interpreters) == len(dates) == len(volumes)
-    all = zip(numbers, titles, interpreters, dates, volumes)
-    Database.insert_inventory(all)
+    content_as_tuple = FileUtils.get_file_content_as_tuple(INI_PATH)
+    Database.insert_inventory(content_as_tuple)
     print("Dados inseridos com sucesso")
 
 
