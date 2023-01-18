@@ -8,17 +8,19 @@ class Database:
         conn = sqlite3.connect("../db/inventario.db")
         cur = conn.cursor()
         Database._drop_table(cur)
-        cur.execute("CREATE TABLE inventario(number, title, interpreter, date, volume, note)")
+        cur.execute("CREATE TABLE inventario(id, recorded_year, letter, letter_seq, title, "
+                    "interpreter, date, volume, note)")
         cur.close()
         conn.close()
 
     @staticmethod
     def insert_inventory(data):
         conn = sqlite3.connect("../db/inventario.db")
-        stmt = "insert into inventario (number, title, interpreter, date, volume, note) values (?, ?, ?, ?, ?, ?)"
+        stmt = ("insert into inventario (id, recorded_year, letter, letter_seq, title, interpreter, "
+                "date, volume, note) "
+                "values (?, ?, ?, ?, ?, ?, ?, ?, ?)")
         cur = conn.cursor()
-        vals = data
-        cur.executemany(stmt, vals)
+        cur.executemany(stmt, data)
         conn.commit()
         cur.close()
         conn.close()
@@ -27,7 +29,9 @@ class Database:
     def read_inventory():
         conn = sqlite3.connect("../db/inventario.db")
         cur = conn.cursor()
-        stmt = "SELECT number, title, interpreter, date, volume, note FROM inventario ORDER BY number"
+        stmt = ("SELECT id, recorded_year, letter, letter_seq, title, interpreter, "
+                "date, volume, note "
+                "FROM inventario ORDER BY id")
         try:
             for row in cur.execute(stmt):
                 print(row)
@@ -38,22 +42,23 @@ class Database:
             conn.close()
 
     @staticmethod
-    def fetch(numero):
+    def fetch(record_id):
         conn = sqlite3.connect("../db/inventario.db")
         cur = conn.cursor()
-        res = cur.execute("SELECT * FROM inventario WHERE number = :numero", {"numero": numero})
+        res = cur.execute("SELECT id, recorded_year, letter, letter_seq, title, interpreter, date, volume, note "
+                          "FROM inventario WHERE id = :id", {"id": record_id})
         res = res.fetchone()
         if not res:
-            return f"Nenhum registro encontrado pelo número {numero}."
+            return f"Nenhum registro encontrado pelo número {record_id}."
         result = {
-            "Nº": res[0],
-            "Título": res[1],
-            "Intérpretes": res[2],
-            "Data": res[3],
-            "Volumes": res[4],
+            "Nº": f"{res[0]}.{res[1]} | {res[2]} - {res[3]}",
+            "Título": res[4],
+            "Intérpretes": res[5],
+            "Data": res[6],
+            "Volumes": res[7],
         }
         if res[5]:
-            result["Observação"] = res[5]
+            result["Observação"] = res[8]
         cur.close()
         conn.close()
 
