@@ -65,6 +65,40 @@ class Database:
         return result
 
     @staticmethod
+    def get_last_id():
+        conn = sqlite3.connect("../db/inventario.db")
+        cur = conn.cursor()
+        stmt = "SELECT max(id) FROM inventario"
+        try:
+            res = cur.execute(stmt)
+            res = res.fetchone()
+            if len(res):
+                return res[0]
+            return 1
+        except sqlite3.OperationalError:
+            print("O banco de dados ainda não está criado. Favor criar o banco de dados")
+        finally:
+            cur.close()
+            conn.close()
+
+    @staticmethod
+    def get_last_letter_seq(letter):
+        conn = sqlite3.connect("../db/inventario.db")
+        cur = conn.cursor()
+        stmt = "SELECT max(letter_seq) FROM inventario WHERE letter = :letter"
+        try:
+            res = cur.execute(stmt, {"letter": letter})
+            res = res.fetchone()
+            if len(res):
+                return res[0]
+            return 1
+        except sqlite3.OperationalError:
+            print("O banco de dados ainda não está criado. Favor criar o banco de dados")
+        finally:
+            cur.close()
+            conn.close()
+
+    @staticmethod
     def _drop_table(cursor):
         res = cursor.execute("SELECT EXISTS (SELECT name FROM sqlite_schema WHERE type='table' AND name='inventario')")
         table_exists = res.fetchone()[0]

@@ -1,4 +1,5 @@
 import sys
+import time
 
 from database import Database
 from fileutils import FileUtils
@@ -38,7 +39,7 @@ def main():
             Database.read_inventory()
             continue
         if received_input == ADD:
-            print("em construção")
+            insert_data()
             continue
         if received_input == FETCH:
             numero = input("Digite o número do registro que deseja consultar:\n")
@@ -53,6 +54,32 @@ def create_database():
     content_as_tuple = FileUtils.get_file_content_as_tuple(INI_PATH)
     Database.insert_inventory(content_as_tuple)
     print("Dados inseridos com sucesso")
+
+
+def insert_data():
+    title = input("Digite o título:\n")
+    interpreter = input("Digite o intérprete:\n")
+    date = input("Digite a data:\n")
+    volume = input("Total de volumes:\n")
+    note = input("Alguma observação?:\n")
+    last_id = Database.get_last_id()
+    new_id = last_id + 1
+    letter = interpreter[0]
+    last_letter_seq = Database.get_last_letter_seq(letter)
+    new_letter_seq = last_letter_seq + 1
+    recorded_year = time.strftime("%y", time.localtime())
+    data = {
+        "id": new_id,
+        "recorded_year": recorded_year,
+        "letter": letter,
+        "letter_seq": new_letter_seq,
+        "title": title,
+        "interpreter": interpreter,
+        "date": date,
+        "volume": volume,
+        "note": note
+    }
+    Database.insert_inventory(data)
 
 
 if __name__ == '__main__':

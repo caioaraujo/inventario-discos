@@ -37,7 +37,7 @@ class FileUtils:
     def _set_ids(id_part, ids):
         id_splitted = id_part.split(".")
         inventory_id = id_splitted[0].strip().lstrip("0")
-        ids.append(inventory_id)
+        ids.append(int(inventory_id))
 
     @staticmethod
     def _set_recorded_years(id_part, recorded_years):
@@ -55,7 +55,7 @@ class FileUtils:
     def _set_letter_seqs(letter_part, letter_seqs):
         letter_splitted = letter_part.split("-")
         letter_seq = letter_splitted[1].strip()
-        letter_seqs.append(letter_seq)
+        letter_seqs.append(int(letter_seq))
 
     @staticmethod
     def get_titles(filecontent):

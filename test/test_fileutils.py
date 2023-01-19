@@ -26,10 +26,10 @@ class TestFileUtils(unittest.TestCase):
         mock_get_file_path.assert_called_once_with(ini_path)
 
     def test_get_numbers(self):
-        expected_ids = ["63", "64", "65"]
+        expected_ids = [63, 64, 65]
         expected_recorded_years = ["22", "22", "22"]
         expected_letters = ["A", "A", "A"]
-        expected_letter_seqs = ["35", "36", "37"]
+        expected_letter_seqs = [35, 36, 37]
         ids, recorded_years, letters, letter_seqs = self.file_utils.get_numbers(self.file_content)
         self.assertEqual(3, len(expected_ids))
         self.assertEqual(3, len(expected_recorded_years))
@@ -71,9 +71,9 @@ class TestFileUtils(unittest.TestCase):
     @mock.patch("src.fileutils.FileUtils.get_file_path", return_value="test/files/teste2.txt")
     def test_get_file_content_as_tuple(self, mock_get_file_path):
         expected = (
-            ("1", "22", "B", "1", "Let it Be", "The Beatles", "1969", "1", ""),
-            ("2", "22", "R", "1", "Gita", "Raul Seixas", "1974", "1", "Em bom estado"),
-            ("3", "22", "B", "2", "The Beatles", "The Beatles", "1968", "2", ""),
+            (1, "22", "B", 1, "Let it Be", "The Beatles", "1969", "1", ""),
+            (2, "22", "R", 1, "Gita", "Raul Seixas", "1974", "1", "Em bom estado"),
+            (3, "22", "B", 2, "The Beatles", "The Beatles", "1968", "2", ""),
         )
         ini_path = "./files/setup_test.ini"
         result = self.file_utils.get_file_content_as_tuple(ini_path)
