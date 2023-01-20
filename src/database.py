@@ -31,10 +31,16 @@ class Database:
         cur = conn.cursor()
         stmt = ("SELECT id, recorded_year, letter, letter_seq, title, interpreter, "
                 "date, volume, note "
-                "FROM inventario ORDER BY id")
+                "FROM inventario ORDER BY letter, letter_seq")
+        inventory = []
         try:
             for row in cur.execute(stmt):
-                print(row)
+                inventory.append(
+                    {"id": row[0], "recorded_year": row[1], "letter": row[2],
+                     "letter_seq": row[3], "title": row[4], "interpreter": row[5],
+                     "date": row[6], "volume": row[7], "note": row[8]
+                     })
+            return inventory
         except sqlite3.OperationalError:
             print("O banco de dados ainda não está criado. Favor criar o banco de dados")
         finally:
@@ -57,7 +63,7 @@ class Database:
             "Data": res[6],
             "Volumes": res[7],
         }
-        if res[5]:
+        if res[8]:
             result["Observação"] = res[8]
         cur.close()
         conn.close()

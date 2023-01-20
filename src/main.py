@@ -1,3 +1,4 @@
+import json
 import sys
 import time
 
@@ -36,7 +37,9 @@ def main():
             create_database()
             continue
         if received_input == READ_TABLE:
-            Database.read_inventory()
+            inventory = Database.read_inventory()
+            inventory_as_json = json.dumps(inventory, indent=4, ensure_ascii=False).encode('utf8')
+            print(inventory_as_json.decode())
             continue
         if received_input == ADD:
             insert_data()
