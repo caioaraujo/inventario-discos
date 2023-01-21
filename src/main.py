@@ -11,7 +11,9 @@ CREATE_DATABASE = 2
 READ_TABLE = 3
 ADD = 4
 FETCH = 5
-EXIT = 6
+UPDATE = 6
+EXPORT_TO_PDF = 7
+EXIT = 8
 
 
 def main():
@@ -24,7 +26,9 @@ def main():
                                        "3-Listar a base de dados\n"
                                        "4-Adicionar entrada\n"
                                        "5-Ler registro por número\n"
-                                       "6-Sair\n"))
+                                       "6-Atualizar registro\n"
+                                       "7-Exportar para PDF\n"
+                                       "8-Sair\n"))
         except ValueError:
             print("opção inválida.\n")
             continue
@@ -49,6 +53,12 @@ def main():
             record = Database.fetch(numero)
             print(record)
             continue
+        if received_input == UPDATE:
+            print("Em construção.")
+            continue
+        if received_input == EXPORT_TO_PDF:
+            print("Em construção.")
+            continue
         print("opção inválida.\n")
 
 
@@ -69,19 +79,9 @@ def insert_data():
     new_id = last_id + 1
     letter = interpreter[0]
     last_letter_seq = Database.get_last_letter_seq(letter)
-    new_letter_seq = last_letter_seq + 1
+    new_letter_seq = last_letter_seq + 1 if last_letter_seq else 1
     recorded_year = time.strftime("%y", time.localtime())
-    data = {
-        "id": new_id,
-        "recorded_year": recorded_year,
-        "letter": letter,
-        "letter_seq": new_letter_seq,
-        "title": title,
-        "interpreter": interpreter,
-        "date": date,
-        "volume": volume,
-        "note": note
-    }
+    data = ((new_id, recorded_year, letter, new_letter_seq, title, interpreter, date, volume, note),)
     Database.insert_inventory(data)
 
 

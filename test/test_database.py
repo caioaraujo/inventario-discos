@@ -96,3 +96,23 @@ class TestDatabase(unittest.TestCase):
         obtained = self._database.fetch(1)
         self.assertEqual(obtained, expected_data)
         execute_mock.assert_called_once_with(expected_stmt, {"id": 1})
+
+    @mock.patch("src.database.sqlite3.connect")
+    def test_get_last_id(self, connect_mock):
+        cursor_mock = connect_mock().cursor()
+        execute_mock = cursor_mock.execute
+        expected_stmt = "SELECT max(id) FROM inventario"
+        execute_mock.return_value.fetchone.return_value = (1,)
+        obtained = self._database.get_last_id()
+        self.assertEqual(1, obtained)
+        execute_mock.assert_called_once_with(expected_stmt)
+
+    @mock.patch("src.database.sqlite3.connect")
+    def test_get_last_letter_seq(self, connect_mock):
+        cursor_mock = connect_mock().cursor()
+        execute_mock = cursor_mock.execute
+        expected_stmt = "SELECT max(letter_seq) FROM inventario WHERE letter = :letter"
+        execute_mock.return_value.fetchone.return_value = (1,)
+        obtained = self._database.get_last_letter_seq("A")
+        self.assertEqual(1, obtained)
+        execute_mock.assert_called_once_with(expected_stmt, {"letter": "A"})
