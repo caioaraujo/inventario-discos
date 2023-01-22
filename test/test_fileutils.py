@@ -80,4 +80,22 @@ class TestFileUtils(unittest.TestCase):
         self.assertEqual(expected, result)
         mock_get_file_path.assert_called_once_with(ini_path)
 
-
+    def test_get_first_letter(self):
+        interpreter_with_the = "The Beatles"
+        letter = self.file_utils.get_first_letter(interpreter_with_the)
+        self.assertEqual("B", letter)
+        interpreter_with_o = "O Terço"
+        letter = self.file_utils.get_first_letter(interpreter_with_o)
+        self.assertEqual("T", letter)
+        interpreter_with_a = "A Melhor Banda do Mundo"
+        letter = self.file_utils.get_first_letter(interpreter_with_a)
+        self.assertEqual("M", letter)
+        interpreter_with_os = "Os Paralamas do Sucesso"
+        letter = self.file_utils.get_first_letter(interpreter_with_os)
+        self.assertEqual("P", letter)
+        interpreter_with_as = "As Panteras"
+        letter = self.file_utils.get_first_letter(interpreter_with_as)
+        self.assertEqual("P", letter)
+        interpreter_without_prefix = "Raul Seixas"
+        letter = self.file_utils.get_first_letter(interpreter_without_prefix)
+        self.assertEqual("R", letter)

@@ -113,5 +113,15 @@ class FileUtils:
         return tuple(zip(ids, recorded_years, letters, letter_seqs, titles, interpreters, dates, volumes, notes))
 
     @staticmethod
+    def get_first_letter(interpreter):
+        if interpreter.startswith("The "):
+            return interpreter[4]
+        if interpreter.startswith("O ") or interpreter.startswith("A "):
+            return interpreter[2]
+        if interpreter.startswith("Os ") or interpreter.startswith("As "):
+            return interpreter[3]
+        return interpreter[0]
+
+    @staticmethod
     def _apply_strip(items):
         return list(map(str.strip, items))
