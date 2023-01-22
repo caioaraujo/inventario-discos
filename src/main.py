@@ -90,10 +90,12 @@ def insert_data():
     interpreter = input("Digite o intérprete:\n")
     date = input("Digite a data:\n")
     volume = input("Total de volumes:\n")
-    note = input("Alguma observação?:\n")
+    letter = input("(opcional) Qual a letra da ordem alfabética?:\n")
+    note = input("(opcional) Alguma observação?:\n")
     last_id = Database.get_last_id()
     new_id = last_id + 1
-    letter = FileUtils.get_first_letter(interpreter)
+    if not letter:
+        letter = FileUtils.get_first_letter(interpreter)
     last_letter_seq = Database.get_last_letter_seq(letter)
     new_letter_seq = last_letter_seq + 1 if last_letter_seq else 1
     recorded_year = time.strftime("%y", time.localtime())
