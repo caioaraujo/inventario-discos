@@ -47,14 +47,30 @@ def main():
             continue
         if received_input == ADD:
             insert_data()
+            print("Dados inseridos com sucesso.")
             continue
         if received_input == FETCH:
-            numero = input("Digite o número do registro que deseja consultar:\n")
+            numero = int(input("Digite o número do registro que deseja consultar:\n"))
             record = Database.fetch(numero)
+            if not record:
+                print(f"Nenhum registro encontrado pelo número {numero}.")
             print(record)
             continue
         if received_input == UPDATE:
-            print("Em construção.")
+            numero = int(input("Digite o número do registro que deseja atualizar:\n"))
+            record = Database.fetch(numero)
+            if not record:
+                print(f"Nenhum registro encontrado pelo número {numero}.")
+                continue
+            print(f"Registro encontrado: \n{record}")
+            answer = input("Deseja alterar esse registro: (s/n):")
+            if answer in ("n", "N"):
+                continue
+            if answer in ("s", "S"):
+                update_data(numero)
+                print("Dados alterados com sucesso.")
+                continue
+            print("Opção inválida.")
             continue
         if received_input == EXPORT_TO_PDF:
             print("Em construção.")
@@ -83,6 +99,18 @@ def insert_data():
     recorded_year = time.strftime("%y", time.localtime())
     data = ((new_id, recorded_year, letter, new_letter_seq, title, interpreter, date, volume, note),)
     Database.insert_inventory(data)
+
+
+def update_data(numero):
+    title = input("Digite o novo título:\n")
+    interpreter = input("Digite o novo intérprete:\n")
+    date = input("Digite a nova data:\n")
+    volume = input("Total de volumes:\n")
+    note = input("Alguma observação?:\n")
+    letter = FileUtils.get_first_letter(interpreter)
+    letter_seq = int(input("Qual a sequência desse disco na ordem alfabética?:\n"))
+    data = ((letter, letter_seq, title, interpreter, date, volume, note, numero),)
+    Database.update_inventory(data)
 
 
 if __name__ == '__main__':

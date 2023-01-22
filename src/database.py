@@ -26,6 +26,18 @@ class Database:
         conn.close()
 
     @staticmethod
+    def update_inventory(data):
+        conn = sqlite3.connect("../db/inventario.db")
+        stmt = ("update inventario SET letter = ?, letter_seq = ?, title = ?, interpreter = ?, "
+                "date = ?, volume = ?, note = ? "
+                "WHERE id = ?")
+        cur = conn.cursor()
+        cur.executemany(stmt, data)
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    @staticmethod
     def read_inventory():
         conn = sqlite3.connect("../db/inventario.db")
         cur = conn.cursor()
@@ -55,7 +67,9 @@ class Database:
                           "FROM inventario WHERE id = :id", {"id": record_id})
         res = res.fetchone()
         if not res:
-            return f"Nenhum registro encontrado pelo número {record_id}."
+            cur.close()
+            conn.close()
+            return None
         result = {
             "Nº": f"{res[0]}.{res[1]} | {res[2]} - {res[3]}",
             "Título": res[4],

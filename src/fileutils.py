@@ -114,6 +114,9 @@ class FileUtils:
 
     @staticmethod
     def get_first_letter(interpreter):
+        first_letter = interpreter[0]
+        if first_letter.isdigit():
+            return "#"
         if interpreter.startswith("The "):
             return interpreter[4]
         if interpreter.startswith("O ") or interpreter.startswith("A "):

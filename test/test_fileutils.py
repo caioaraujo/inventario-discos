@@ -81,6 +81,9 @@ class TestFileUtils(unittest.TestCase):
         mock_get_file_path.assert_called_once_with(ini_path)
 
     def test_get_first_letter(self):
+        interpreter_with_number = "14 Bis"
+        letter = self.file_utils.get_first_letter(interpreter_with_number)
+        self.assertEqual("#", letter)
         interpreter_with_the = "The Beatles"
         letter = self.file_utils.get_first_letter(interpreter_with_the)
         self.assertEqual("B", letter)

@@ -38,6 +38,21 @@ class TestDatabase(unittest.TestCase):
         executemany_mock.assert_called_once_with(expected_stmt, expected_data)
 
     @mock.patch("src.database.sqlite3.connect")
+    def test_update_inventory(self, connect_mock):
+        cursor_mock = connect_mock().cursor()
+        executemany_mock = cursor_mock.executemany
+        expected_stmt = ("update inventario SET letter = ?, letter_seq = ?, title = ?, interpreter = ?, "
+                         "date = ?, volume = ?, note = ? "
+                         "WHERE id = ?")
+        expected_data = [
+            {
+                "recorded_year": "22", "letter": "A", "letter_seq": 1, "title": "AAB", "interpreter": "AAB",
+                "date": "1990", "volume": "1", "note": None, "id": 1},
+        ]
+        self._database.update_inventory(expected_data)
+        executemany_mock.assert_called_once_with(expected_stmt, expected_data)
+
+    @mock.patch("src.database.sqlite3.connect")
     def test_read_inventory(self, connect_mock):
         cursor_mock = connect_mock().cursor()
         execute_mock = cursor_mock.execute
