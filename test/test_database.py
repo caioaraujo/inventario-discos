@@ -131,3 +131,19 @@ class TestDatabase(unittest.TestCase):
         obtained = self._database.get_last_letter_seq("A")
         self.assertEqual(1, obtained)
         execute_mock.assert_called_once_with(expected_stmt, {"letter": "A"})
+
+    @mock.patch("src.database.Database._update_inventory_in_alphabetical_order")
+    @mock.patch("src.database.sqlite3.connect")
+    def test_normalize_sequence(self, connect_mock, mock_update_inventory_in_alphabetical_order):
+        cursor_mock = connect_mock().cursor()
+        execute_mock = cursor_mock.execute
+        expected_fetched_data = [
+            (1, "The Beatles", "1968"),
+            (2, "The Beatles", "1961"),
+            (3, "Barão Vermelho", "1988")
+        ]
+        execute_mock.return_value.fetchall.return_value = expected_fetched_data
+        self._database.normalize_sequence("B")
+        expected_sorted_letter_seq_id = [(1, 3), (2, 2), (3, 1)]
+        mock_update_inventory_in_alphabetical_order.assert_called_once_with(connect_mock(), expected_sorted_letter_seq_id)
+
