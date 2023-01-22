@@ -1,5 +1,6 @@
 import unittest
 from unittest import mock
+from unittest.mock import mock_open
 
 from src import fileutils
 
@@ -105,3 +106,35 @@ class TestFileUtils(unittest.TestCase):
         interpreter_without_prefix = "Raul Seixas"
         letter = self.file_utils.get_first_letter(interpreter_without_prefix)
         self.assertEqual("R", letter)
+
+    @mock.patch("src.fileutils.FileUtils._get_filepath")
+    def test_write_txt(self, mock_get_file_path):
+        fakefile = "test/files/inventario.txt"
+        mock_get_file_path.return_value = fakefile
+        filedir = "test/files/"
+        inventory = [
+            {
+                "id": 1, "recorded_year": "22", "letter": "A", "letter_seq": 1, "title": "AAA", "interpreter": "AAA",
+                "date": "1990", "volume": "1", "note": None},
+            {
+                "id": 2, "recorded_year": "22", "letter": "A", "letter_seq": 2, "title": "AAB", "interpreter": "AAB",
+                "date": "1990", "volume": "1", "note": "Muito bom"},
+        ]
+        expected_calls = [
+            mock.call("Nº: CM.Dv.00001.022 | A - 1\n"),
+            mock.call("Título: AAA\n"),
+            mock.call("Intérpretes: AAA\n"),
+            mock.call("Data: 1990 | Volumes: 1"),
+            mock.call("\n\n"),
+            mock.call("Nº: CM.Dv.00002.022 | A - 2\n"),
+            mock.call("Título: AAB\n"),
+            mock.call("Intérpretes: AAB\n"),
+            mock.call("Data: 1990 | Volumes: 1"),
+            mock.call("\nObservação: Muito bom"),
+            mock.call("\n\n")
+        ]
+        with mock.patch('builtins.open', mock_open()) as mocked_file:
+            self.file_utils.write_txt(inventory, filedir)
+            mocked_file.assert_called_once_with(fakefile, 'w')
+            mocked_file().write.assert_has_calls(expected_calls)
+            mock_get_file_path.assert_called_once_with(filedir)

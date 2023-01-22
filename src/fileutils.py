@@ -127,11 +127,11 @@ class FileUtils:
         return first_letter
 
     @staticmethod
-    def write_txt(inventory, filepath):
-        cur_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
-        if not filepath.endswith("/"):
-            filepath = filepath + "/"
-        with open(f"{filepath}inventario_{cur_datetime}.txt", "w") as output:
+    def write_txt(inventory, filedir):
+        if not filedir.endswith("/"):
+            filedir = filedir + "/"
+        filepath = FileUtils._get_filepath(filedir)
+        with open(filepath, "w") as output:
             for data in inventory:
                 id_zfilled = str(data["id"]).zfill(5)
                 year_zfilled = data["recorded_year"].zfill(3)
@@ -145,7 +145,10 @@ class FileUtils:
                     output.write(f"\nObservação: {note}")
                 output.write("\n\n")
 
-
+    @staticmethod
+    def _get_filepath(filedir):
+        cur_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
+        return f"{filedir}inventario_{cur_datetime}.txt"
 
     @staticmethod
     def _apply_strip(items):
