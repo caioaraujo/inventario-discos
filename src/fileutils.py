@@ -115,15 +115,15 @@ class FileUtils:
     @staticmethod
     def get_first_letter(interpreter):
         first_letter = interpreter[0]
+        if interpreter.startswith("The "):
+            first_letter = interpreter[4]
+        if interpreter.startswith("O ") or interpreter.startswith("A "):
+            first_letter = interpreter[2]
+        if interpreter.startswith("Os ") or interpreter.startswith("As "):
+            first_letter = interpreter[3]
         if first_letter.isdigit():
             return "#"
-        if interpreter.startswith("The "):
-            return interpreter[4]
-        if interpreter.startswith("O ") or interpreter.startswith("A "):
-            return interpreter[2]
-        if interpreter.startswith("Os ") or interpreter.startswith("As "):
-            return interpreter[3]
-        return interpreter[0]
+        return first_letter
 
     @staticmethod
     def _apply_strip(items):

@@ -84,6 +84,9 @@ class TestFileUtils(unittest.TestCase):
         interpreter_with_number = "14 Bis"
         letter = self.file_utils.get_first_letter(interpreter_with_number)
         self.assertEqual("#", letter)
+        interpreter_with_number_and_article = "Os 10 Mandamentos"
+        letter = self.file_utils.get_first_letter(interpreter_with_number_and_article)
+        self.assertEqual("#", letter)
         interpreter_with_the = "The Beatles"
         letter = self.file_utils.get_first_letter(interpreter_with_the)
         self.assertEqual("B", letter)

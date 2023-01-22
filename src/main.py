@@ -107,7 +107,7 @@ def update_data(numero):
     date = input("Digite a nova data:\n")
     volume = input("Total de volumes:\n")
     note = input("Alguma observação?:\n")
-    letter = FileUtils.get_first_letter(interpreter)
+    letter = input("Qual a letra da ordem alfabética?:\n")
     letter_seq = int(input("Qual a sequência desse disco na ordem alfabética?:\n"))
     data = ((letter, letter_seq, title, interpreter, date, volume, note, numero),)
     Database.update_inventory(data)
