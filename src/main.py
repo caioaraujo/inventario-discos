@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 import time
 
@@ -13,7 +14,8 @@ ADD = 4
 FETCH = 5
 UPDATE = 6
 EXPORT_TO_PDF = 7
-EXIT = 8
+EXPORT_TO_TXT = 8
+EXIT = 9
 
 
 def main():
@@ -28,7 +30,8 @@ def main():
                                        "5-Ler registro por número\n"
                                        "6-Atualizar registro\n"
                                        "7-Exportar para PDF\n"
-                                       "8-Sair\n"))
+                                       "8-Exportar para TXT\n"
+                                       "9-Sair\n"))
         except ValueError:
             print("opção inválida.\n")
             continue
@@ -74,6 +77,18 @@ def main():
             continue
         if received_input == EXPORT_TO_PDF:
             print("Em construção.")
+            continue
+        if received_input == EXPORT_TO_TXT:
+            filepath = input("Informe o caminho onde deseja salvar o arquivo:\n")
+            if not filepath:
+                print("Caminho não especificado. Abortando operação.")
+                continue
+            path_exists = os.path.exists(filepath)
+            if not path_exists:
+                print(f"Caminho inválido: {filepath}. Verifique e tente novamente")
+                continue
+            inventory = Database.read_inventory()
+            FileUtils.write_txt(inventory, filepath)
             continue
         print("opção inválida.\n")
 

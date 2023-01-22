@@ -1,4 +1,5 @@
 import configparser
+from datetime import datetime
 import re
 
 
@@ -124,6 +125,27 @@ class FileUtils:
         if first_letter.isdigit():
             return "#"
         return first_letter
+
+    @staticmethod
+    def write_txt(inventory, filepath):
+        cur_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
+        if not filepath.endswith("/"):
+            filepath = filepath + "/"
+        with open(f"{filepath}inventario_{cur_datetime}.txt", "w") as output:
+            for data in inventory:
+                id_zfilled = str(data["id"]).zfill(5)
+                year_zfilled = data["recorded_year"].zfill(3)
+                number = f"CM.Dv.{id_zfilled}.{year_zfilled} | {data['letter']} - {data['letter_seq']}"
+                output.write(f"Nº: {number}\n")
+                output.write(f"Título: {data['title']}\n")
+                output.write(f"Intérpretes: {data['interpreter']}\n")
+                output.write(f"Data: {data['date']} | Volumes: {data['volume']}")
+                note = data["note"]
+                if note:
+                    output.write(f"\nObservação: {note}")
+                output.write("\n\n")
+
+
 
     @staticmethod
     def _apply_strip(items):

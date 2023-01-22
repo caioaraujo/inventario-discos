@@ -22,7 +22,9 @@ A opção 6 atualiza um registro pelo número sequencial.
 
 A opção 7 gera o PDF com os dados.
 
-Por fim, a opção 8 finaliza o programa.
+A opção 8 gera um arquivo txt somente com os dados.
+
+Por fim, a opção 9 finaliza o programa.
 
 Após inserir ou atualizar um registro, todos os registros da correspondente ordem alfabética são atualizados na base com
 seus novos sequenciais.
