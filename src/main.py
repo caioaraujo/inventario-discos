@@ -99,6 +99,7 @@ def insert_data():
     recorded_year = time.strftime("%y", time.localtime())
     data = ((new_id, recorded_year, letter, new_letter_seq, title, interpreter, date, volume, note),)
     Database.insert_inventory(data)
+    Database.normalize_sequence(letter)
 
 
 def update_data(numero):
@@ -111,6 +112,7 @@ def update_data(numero):
     letter_seq = int(input("Qual a sequência desse disco na ordem alfabética?:\n"))
     data = ((letter, letter_seq, title, interpreter, date, volume, note, numero),)
     Database.update_inventory(data)
+    Database.normalize_sequence(letter)
 
 
 if __name__ == '__main__':
