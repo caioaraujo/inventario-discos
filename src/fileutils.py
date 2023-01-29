@@ -14,7 +14,7 @@ class FileUtils:
     @staticmethod
     def get_file_content(ini_file):
         filepath = FileUtils.get_file_path(ini_file)
-        with open(filepath, 'r') as file:
+        with open(filepath, 'r', encoding='utf-8') as file:
             return " ".join(file.readlines())
 
     @staticmethod
