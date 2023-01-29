@@ -33,7 +33,11 @@ posteriores referentes a essa letra serão incrementados. Caso os valores não s
 Os dados do arquivo serão armazenados em um banco `sqlite` que fica dentro do próprio projeto. 
 
 ## Instalação
-Execute no seu ambiente de desenvolvimento `python src/main.py`.
+- Execute na raíz do projeto `pip install -r requirements.txt` para instalar as dependências.;
+- Instale no seu sistema operacional o aplicativo [wkhtmltopdf](https://wkhtmltopdf.org/downloads.html) 
+para geração de PDFs;
+- Configure o arquivo `setup.ini`;
+- Execute no seu ambiente de desenvolvimento `python src/main.py`.
 
 # Testes
 Execute no seu ambiente de desenvolvimento `python -m unittest` a partir da raíz do projeto.

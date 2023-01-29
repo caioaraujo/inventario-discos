@@ -2,8 +2,14 @@ import configparser
 from datetime import datetime
 import re
 
+import jinja2
+import pdfkit
+
 
 class FileUtils:
+
+    ALPHABET = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+                "T", "U", "V", "W", "X", "Y", "Z"]
 
     @staticmethod
     def get_file_path(ini_file):
@@ -130,7 +136,7 @@ class FileUtils:
     def write_txt(inventory, filedir):
         if not filedir.endswith("/"):
             filedir = filedir + "/"
-        filepath = FileUtils._get_filepath(filedir)
+        filepath = FileUtils._get_filepath(filedir, "txt")
         with open(filepath, "w") as output:
             for data in inventory:
                 id_zfilled = str(data["id"]).zfill(5)
@@ -146,9 +152,32 @@ class FileUtils:
                 output.write("\n\n")
 
     @staticmethod
-    def _get_filepath(filedir):
+    def write_pdf(inventory, filedir):
+        if not filedir.endswith("/"):
+            filedir = filedir + "/"
+        filepath = FileUtils._get_filepath(filedir, "pdf")
+        template_loader = jinja2.FileSystemLoader("../files/")
+        template_env = jinja2.Environment(loader=template_loader)
+        template = template_env.get_template("template_pdf.html")
+        context = {"volumes_numerais": [i for i in inventory if i["letter"] == "#"]}
+        for letter in FileUtils.ALPHABET:
+            context_key = f"volumes_{letter.lower()}"
+            context[context_key] = [i for i in inventory if i["letter"] == letter]
+        output_text = template.render(context)
+        wkhtmltopdf_path = FileUtils._get_wkhtmltopdf_path("../setup.ini")
+        config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
+        pdfkit.from_string(output_text, filepath, configuration=config)
+
+    @staticmethod
+    def _get_wkhtmltopdf_path(ini_file):
+        config = configparser.ConfigParser()
+        config.read(ini_file)
+        return config.get('filepath', 'wkhtmltopdf_path')
+
+    @staticmethod
+    def _get_filepath(filedir, format):
         cur_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
-        return f"{filedir}inventario_{cur_datetime}.txt"
+        return f"{filedir}inventario_{cur_datetime}.{format}"
 
     @staticmethod
     def _apply_strip(items):

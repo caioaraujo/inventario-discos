@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <b>Casa da Memória - Reserva Técnica</b><br>
+    <b>Arquivo Zininho - Discografia</b><br>
+    <b>Inventário</b><br>
+    <b>TOTAL:</b><br><br>
+
+    <b>Ordem Alfabética -</b> # (Numerais)<br>
+    <b>Localização:</b> 2ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_numerais|length}}<br><br>
+
+    {% for volume in volumes_numerais %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b>{{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> A<br>
+    <b>Localização:</b> 2ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_a|length}}<br><br>
+
+    {% for volume in volumes_a %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> B<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_b|length}}<br><br>
+
+    {% for volume in volumes_b %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> C<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_c|length}}<br><br>
+
+    {% for volume in volumes_c %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> D<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_d|length}}<br><br>
+
+    {% for volume in volumes_d %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> E<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_e|length}}<br><br>
+
+    {% for volume in volumes_e %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> F<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_f|length}}<br><br>
+
+    {% for volume in volumes_f %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> G<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_g|length}}<br><br>
+
+    {% for volume in volumes_g %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> H<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_h|length}}<br><br>
+
+    {% for volume in volumes_h %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> I<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_i|length}}<br><br>
+
+    {% for volume in volumes_i %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> J<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_j|length}}<br><br>
+
+    {% for volume in volumes_j %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> K<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_k|length}}<br><br>
+
+    {% for volume in volumes_k %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> L<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_l|length}}<br><br>
+
+    {% for volume in volumes_l %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> M<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_m|length}}<br><br>
+
+    {% for volume in volumes_m %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> N<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_n|length}}<br><br>
+
+    {% for volume in volumes_n %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> O<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_o|length}}<br><br>
+
+    {% for volume in volumes_o %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> P<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_p|length}}<br><br>
+
+    {% for volume in volumes_p %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> Q<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_q|length}}<br><br>
+
+    {% for volume in volumes_q %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> R<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_r|length}}<br><br>
+
+    {% for volume in volumes_r %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> S<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_s|length}}<br><br>
+
+    {% for volume in volumes_s %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> T<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_t|length}}<br><br>
+
+    {% for volume in volumes_t %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> U<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_u|length}}<br><br>
+
+    {% for volume in volumes_u %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> V<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_v|length}}<br><br>
+
+    {% for volume in volumes_v %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> W<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_w|length}}<br><br>
+
+    {% for volume in volumes_w %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> X<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_x|length}}<br><br>
+
+    {% for volume in volumes_x %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> Y<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_y|length}}<br><br>
+
+    {% for volume in volumes_y %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+    <b>Ordem Alfabética -</b> Z<br>
+    <b>Localização:</b> 6ª Prateleira / Gôndola 04<br>
+    <b>Total volumes:</b> {{volumes_z|length}}<br><br>
+
+    {% for volume in volumes_z %}
+        <b>Nº: CM.Dv.{{'%05d' % volume["id"]}}.{{volume["recorded_year"]}}</b> | {{volume["letter"]}} - {{volume["letter_seq"]}}<br>
+        <b>Título:</b> {{volume["title"]}}<br>
+        <b>Intérpretes:</b> {{volume["interpreter"]}}<br>
+        <b>Data:</b> {{volume["date"]}} | <b>Volumes:</b> {{volume["volume"]}}
+        {% if volume["note"] %}
+        <br><b>Observação:</b> {{volume["note"]}}
+        {% endif %}
+        <br><br>
+    {% endfor %}
+</body>
+</html>

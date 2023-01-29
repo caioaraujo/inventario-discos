@@ -137,4 +137,4 @@ class TestFileUtils(unittest.TestCase):
             self.file_utils.write_txt(inventory, filedir)
             mocked_file.assert_called_once_with(fakefile, 'w')
             mocked_file().write.assert_has_calls(expected_calls)
-            mock_get_file_path.assert_called_once_with(filedir)
+            mock_get_file_path.assert_called_once_with(filedir, "txt")

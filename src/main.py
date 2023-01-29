@@ -76,7 +76,16 @@ def main():
             print("Opção inválida.")
             continue
         if received_input == EXPORT_TO_PDF:
-            print("Em construção.")
+            filepath = input("Informe o caminho onde deseja salvar o arquivo:\n")
+            if not filepath:
+                print("Caminho não especificado. Abortando operação.")
+                continue
+            path_exists = os.path.exists(filepath)
+            if not path_exists:
+                print(f"Caminho inválido: {filepath}. Verifique e tente novamente")
+                continue
+            inventory = Database.read_inventory()
+            FileUtils.write_pdf(inventory, filepath)
             continue
         if received_input == EXPORT_TO_TXT:
             filepath = input("Informe o caminho onde deseja salvar o arquivo:\n")
