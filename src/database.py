@@ -119,52 +119,23 @@ class Database:
             conn.close()
 
     @staticmethod
-    def normalize_sequence(letter):
+    def normalize_sequence(letter, letter_seq):
         """
-        Update all records in given letter, sorted by interpreter and date.
+        Increment all records after the given letter_seq in given letter, sorted by interpreter and date.
 
         :param letter: Interpreter letter
+        :param letter_seq: Current sequential. All sequentials after this number will be incremented.
         :return: None
         """
         conn = sqlite3.connect("../db/inventario.db")
         cur = conn.cursor()
-        stmt = "SELECT id, interpreter, date FROM inventario WHERE letter = :letter"
-        res = cur.execute(stmt, {"letter": letter})
-        all_records = res.fetchall()
-        if len(all_records) == 1:
-            cur.close()
-            conn.close()
-            return
-        sorted_records = []
-        Database._get_cleaned_interpreter_list(all_records, sorted_records)
-        Database._get_sorted_interpreter_list(sorted_records)
-        Database._update_inventory_in_alphabetical_order(conn, sorted_records)
-        cur.close()
-        conn.close()
-
-    @staticmethod
-    def _update_inventory_in_alphabetical_order(conn, data):
-        cur = conn.cursor()
-        stmt = "UPDATE inventario SET letter_seq = ? WHERE id = ?"
-        cur.executemany(stmt, data)
+        stmt = ("UPDATE inventario "
+                "SET letter_seq = letter_seq + 1 "
+                "WHERE letter = :letter AND letter_seq >= :letter_seq ")
+        cur.execute(stmt, {"letter": letter, "letter_seq": letter_seq})
         conn.commit()
         cur.close()
-
-    @staticmethod
-    def _get_sorted_interpreter_list(cleaned_list):
-        cleaned_list.sort(key=lambda a: (a[1], a[2]))
-        record_index = 1
-        for list_index, sorted_record in enumerate(cleaned_list):
-            cleaned_list[list_index] = (record_index, sorted_record[0])
-            record_index += 1
-
-    @staticmethod
-    def _get_cleaned_interpreter_list(raw_interpreter_list, cleaned_list):
-        for record in raw_interpreter_list:
-            record_id = record[0]
-            interpreter = Database._clean_interpreter(record[1])
-            date = record[2]
-            cleaned_list.append((record_id, interpreter, date))
+        conn.close()
 
     @staticmethod
     def _clean_interpreter(interpreter):

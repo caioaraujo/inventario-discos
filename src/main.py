@@ -106,17 +106,22 @@ def insert_data():
     date = input("Digite a data:\n")
     volume = input("Total de volumes:\n")
     letter = input("(opcional) Qual a letra da ordem alfabética?:\n")
+    letter_seq = input("(opcional) Qual a sequência numérica da letra correspondente?\n")
     note = input("(opcional) Alguma observação?:\n")
     last_id = Database.get_last_id()
     new_id = last_id + 1
     if not letter:
         letter = FileUtils.get_first_letter(interpreter)
-    last_letter_seq = Database.get_last_letter_seq(letter)
-    new_letter_seq = last_letter_seq + 1 if last_letter_seq else 1
+    letter = letter.upper()
+    if not letter_seq:
+        last_letter_seq = Database.get_last_letter_seq(letter)
+        letter_seq = last_letter_seq + 1 if last_letter_seq else 1
+    else:
+        letter_seq = int(letter_seq)
+        Database.normalize_sequence(letter, letter_seq)
     recorded_year = time.strftime("%y", time.localtime())
-    data = ((new_id, recorded_year, letter, new_letter_seq, title, interpreter, date, volume, note),)
+    data = ((new_id, recorded_year, letter, letter_seq, title, interpreter, date, volume, note),)
     Database.insert_inventory(data)
-    Database.normalize_sequence(letter)
 
 
 def update_data(numero):
@@ -124,12 +129,12 @@ def update_data(numero):
     interpreter = input("Digite o novo intérprete:\n")
     date = input("Digite a nova data:\n")
     volume = input("Total de volumes:\n")
-    note = input("Alguma observação?:\n")
     letter = input("Qual a letra da ordem alfabética?:\n")
     letter_seq = int(input("Qual a sequência desse disco na ordem alfabética?:\n"))
+    note = input("Alguma observação?:\n")
     data = ((letter, letter_seq, title, interpreter, date, volume, note, numero),)
+    Database.normalize_sequence(letter, letter_seq)
     Database.update_inventory(data)
-    Database.normalize_sequence(letter)
 
 
 if __name__ == '__main__':

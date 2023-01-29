@@ -1,7 +1,7 @@
 # inventario-discos
 Projeto voluntário em prol da cultura de Santa Catarina.
 
-Opção 1 lê o arquivo definido em `setup.ini`. O arquivo precisar estar no formato txt e na seguinte estrutura:
+Opção 1 lê o arquivo definido em `setup.ini`. O arquivo precisar estar no formato txt, em UTF-8 e na seguinte estrutura:
 ```
 Nº: numero
 Título: Titulo do album
@@ -26,8 +26,9 @@ A opção 8 gera um arquivo txt somente com os dados.
 
 Por fim, a opção 9 finaliza o programa.
 
-Após inserir ou atualizar um registro, todos os registros da correspondente ordem alfabética são atualizados na base com
-seus novos sequenciais.
+Após inserir ou atualizar um registro, caso seja especificado a letra e o número da ordem alfabética, todos os registros
+posteriores referentes a essa letra serão incrementados. Caso os valores não sejam especificados, será inserido como o
+último registro naquela letra correspondente.
 
 Os dados do arquivo serão armazenados em um banco `sqlite` que fica dentro do próprio projeto. 
 
