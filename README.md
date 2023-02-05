@@ -32,6 +32,11 @@ posteriores referentes a essa letra serão incrementados. Caso os valores não s
 
 Os dados do arquivo serão armazenados em um banco `sqlite` que fica dentro do próprio projeto. 
 
+## Pré-requisitos
+- Sistema operacional Ubuntu 22.04 ou Windows 10;
+- Python 3.11;
+- wkhtmltopdf
+
 ## Instalação
 - Execute na raíz do projeto `pip install -r requirements.txt` para instalar as dependências.;
 - Instale no seu sistema operacional o aplicativo [wkhtmltopdf](https://wkhtmltopdf.org/downloads.html) 

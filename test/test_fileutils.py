@@ -135,6 +135,6 @@ class TestFileUtils(unittest.TestCase):
         ]
         with mock.patch('builtins.open', mock_open()) as mocked_file:
             self.file_utils.write_txt(inventory, filedir)
-            mocked_file.assert_called_once_with(fakefile, 'w')
+            mocked_file.assert_called_once_with(fakefile, 'w', encoding='utf-8')
             mocked_file().write.assert_has_calls(expected_calls)
             mock_get_file_path.assert_called_once_with(filedir, "txt")
