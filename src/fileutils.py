@@ -137,7 +137,7 @@ class FileUtils:
         if not filedir.endswith("/"):
             filedir = filedir + "/"
         filepath = FileUtils._get_filepath(filedir, "txt")
-        with open(filepath, "w") as output:
+        with open(filepath, "w", encoding='utf-8') as output:
             for data in inventory:
                 id_zfilled = str(data["id"]).zfill(5)
                 year_zfilled = data["recorded_year"].zfill(3)
