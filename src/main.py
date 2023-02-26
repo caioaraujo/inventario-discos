@@ -130,6 +130,7 @@ def insert_data():
     recorded_year = time.strftime("%y", time.localtime())
     data = ((record_id, recorded_year, letter, letter_seq, title, interpreter, date, volume, note),)
     Database.insert_inventory(data)
+    Database.normalize_ids()
 
 
 def update_data(numero):
@@ -143,6 +144,7 @@ def update_data(numero):
     data = ((letter, letter_seq, title, interpreter, date, volume, note, numero),)
     Database.normalize_sequence(letter, letter_seq)
     Database.update_inventory(data)
+    Database.normalize_ids()
 
 
 if __name__ == '__main__':

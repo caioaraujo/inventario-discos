@@ -160,3 +160,16 @@ class TestDatabase(unittest.TestCase):
             "WHERE letter = :letter AND letter_seq >= :letter_seq ")
         self._database.normalize_sequence("B", 2)
         execute_mock.assert_called_once_with(expected_stmt, {"letter": "B", "letter_seq": 2})
+
+    @mock.patch("src.database.sqlite3.connect")
+    def test_normalize_ids(self, connect_mock):
+        cursor_mock = connect_mock().cursor()
+        execute_mock = cursor_mock.execute
+        execute_many_mock = cursor_mock.executemany
+        execute_mock.return_value = (("#", 1), ("#", 2), ("A", 1))
+        stmt_query = "SELECT letter, letter_seq FROM inventario ORDER BY letter, letter_seq"
+        update_stmt = "UPDATE inventario SET id = ? WHERE letter = ? AND letter_seq = ?"
+        expected = [(1, "#", 1), (2, "#", 2), (3, "A", 1)]
+        self._database.normalize_ids()
+        execute_mock.assert_called_once_with(stmt_query)
+        execute_many_mock.assert_called_once_with(update_stmt, expected)
