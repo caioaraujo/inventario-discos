@@ -12,9 +12,15 @@ class FileUtils:
 
     @staticmethod
     def get_file_path(ini_file):
-        config = configparser.ConfigParser()
-        config.read(ini_file)
-        return config.get('filepath', 'path')
+        return FileUtils._get_content_from_ini(ini_file, 'filepath', 'path_read_inventory')
+
+    @staticmethod
+    def get_path_to_save_pdf(ini_file):
+        return FileUtils._get_content_from_ini(ini_file, 'filepath', 'path_save_pdf')
+
+    @staticmethod
+    def get_path_to_save_txt(ini_file):
+        return FileUtils._get_content_from_ini(ini_file, 'filepath', 'path_save_txt')
 
     @staticmethod
     def get_file_content(ini_file):
@@ -168,10 +174,14 @@ class FileUtils:
         pdfkit.from_string(output_text, filepath, configuration=config)
 
     @staticmethod
-    def _get_wkhtmltopdf_path(ini_file):
+    def _get_content_from_ini(ini_file, key, value):
         config = configparser.ConfigParser()
         config.read(ini_file)
-        return config.get('filepath', 'wkhtmltopdf_path')
+        return config.get(key, value)
+
+    @staticmethod
+    def _get_wkhtmltopdf_path(ini_file):
+        return FileUtils._get_content_from_ini(ini_file, 'filepath', 'wkhtmltopdf_path')
 
     @staticmethod
     def _get_filepath(filedir, format):
