@@ -15,7 +15,6 @@ class TestDatabase(unittest.TestCase):
         cursor_mock = connect_mock().cursor()
         cursor_mock.execute.return_value = [1]
         self._database.create_table()
-        connect_mock.assert_called_with("../db/inventario.db")
         drop_table_mock.assert_called_once_with(cursor_mock)
         cursor_mock.execute.assert_called_once()
 

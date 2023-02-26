@@ -173,7 +173,8 @@ class Database:
         finally:
             cur.close()
             conn.close()
-            
+
+    @staticmethod
     def normalize_ids():
         """
         Update all inventory ids ordered by letter and letter_seq
