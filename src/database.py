@@ -1,6 +1,9 @@
 import sqlite3
 
 import src.static as static
+import traceback
+from dbutils import DBUtils
+
 
 import os
 db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'db', 'inventario.db')
@@ -156,6 +159,23 @@ class Database:
         conn.close()
 
     @staticmethod
+    def run_query(stmt):
+        conn =sqlite3.connect(db_path)
+        cur = conn.cursor()
+        conn.row_factory = DBUtils.row_to_dict
+        try:
+            res=  cur.execute(stmt)
+            return res.fetchall()
+        except sqlite3.OperationalError as e:
+            print("erro na execução de query")
+            print(e)
+            traceback.print_exc()
+
+        finally:
+            cur.close()
+            conn.close()
+
+    @staticmethod
     def _get_previous_letter(letter):
         if letter == "A":
             return "#"
@@ -163,6 +183,9 @@ class Database:
         cur_letter_index = all_letters.index(letter)
         previous_letter = all_letters[cur_letter_index-1]
         return previous_letter
+
+
+
 
     @staticmethod
     def _clean_interpreter(interpreter):
@@ -173,7 +196,7 @@ class Database:
         if interpreter.startswith("Os ") or interpreter.startswith("As "):
             return interpreter[3:]
         return interpreter
-
+    
     @staticmethod
     def _drop_table(cursor):
         res = cursor.execute("SELECT EXISTS (SELECT name FROM sqlite_schema WHERE type='table' AND name='inventario')")
