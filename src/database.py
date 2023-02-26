@@ -1,13 +1,20 @@
 import sqlite3
 
 import src.static as static
+import traceback
+
+
+import os
+db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'db', 'inventario.db')
 
 
 class Database:
 
     @staticmethod
     def create_table():
-        conn = sqlite3.connect("../db/inventario.db")
+        # busca a path relativa para não precisar de configuração:        
+        print(db_path)
+        conn = sqlite3.connect(db_path)
         cur = conn.cursor()
         Database._drop_table(cur)
         cur.execute("CREATE TABLE inventario(id, recorded_year, letter, letter_seq, title, "
@@ -17,7 +24,7 @@ class Database:
 
     @staticmethod
     def insert_inventory(data):
-        conn = sqlite3.connect("../db/inventario.db")
+        conn =sqlite3.connect(db_path)
         stmt = ("insert into inventario (id, recorded_year, letter, letter_seq, title, interpreter, "
                 "date, volume, note) "
                 "values (?, ?, ?, ?, ?, ?, ?, ?, ?)")
@@ -29,7 +36,7 @@ class Database:
 
     @staticmethod
     def update_inventory(data):
-        conn = sqlite3.connect("../db/inventario.db")
+        conn =sqlite3.connect(db_path)
         stmt = ("update inventario SET letter = ?, letter_seq = ?, title = ?, interpreter = ?, "
                 "date = ?, volume = ?, note = ? "
                 "WHERE id = ?")
@@ -41,7 +48,7 @@ class Database:
 
     @staticmethod
     def read_inventory():
-        conn = sqlite3.connect("../db/inventario.db")
+        conn =sqlite3.connect(db_path)
         cur = conn.cursor()
         stmt = ("SELECT id, recorded_year, letter, letter_seq, title, interpreter, "
                 "date, volume, note "
@@ -63,7 +70,7 @@ class Database:
 
     @staticmethod
     def fetch(record_id):
-        conn = sqlite3.connect("../db/inventario.db")
+        conn =sqlite3.connect(db_path)
         cur = conn.cursor()
         res = cur.execute("SELECT id, recorded_year, letter, letter_seq, title, interpreter, date, volume, note "
                           "FROM inventario WHERE id = :id", {"id": record_id})
@@ -99,7 +106,7 @@ class Database:
             if letter == "#":
                 return 1
             letter = Database._get_previous_letter(letter)
-        conn = sqlite3.connect("../db/inventario.db")
+        conn =sqlite3.connect(db_path)
         cur = conn.cursor()
         stmt = "SELECT max(id) FROM inventario WHERE letter = :letter"
         try:
@@ -116,7 +123,7 @@ class Database:
 
     @staticmethod
     def get_last_letter_seq(letter):
-        conn = sqlite3.connect("../db/inventario.db")
+        conn =sqlite3.connect(db_path)
         cur = conn.cursor()
         stmt = "SELECT max(letter_seq) FROM inventario WHERE letter = :letter"
         try:
@@ -140,7 +147,7 @@ class Database:
         :param letter_seq: Current sequential. All sequentials after this number will be incremented.
         :return: None
         """
-        conn = sqlite3.connect("../db/inventario.db")
+        conn =sqlite3.connect(db_path)
         cur = conn.cursor()
         stmt = ("UPDATE inventario "
                 "SET letter_seq = letter_seq + 1 "
@@ -151,6 +158,22 @@ class Database:
         conn.close()
 
     @staticmethod
+    def run_query(stmt):
+        conn =sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+        try:
+            rows = cur.execute(stmt)
+            return rows.fetchall()
+        except sqlite3.OperationalError as e:
+            print("erro na execução de query")
+            print(e)
+            traceback.print_exc()
+
+        finally:
+            cur.close()
+            conn.close()
+            
     def normalize_ids():
         """
         Update all inventory ids ordered by letter and letter_seq

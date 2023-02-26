@@ -15,7 +15,9 @@ FETCH = 5
 UPDATE = 6
 EXPORT_TO_PDF = 7
 EXPORT_TO_TXT = 8
-EXIT = 9
+RUN_ARBITRARY_QUERY = 9
+EXIT = 10
+
 
 
 def main():
@@ -31,12 +33,18 @@ def main():
                                        "6-Atualizar registro\n"
                                        "7-Exportar para PDF\n"
                                        "8-Exportar para TXT\n"
-                                       "9-Sair\n"))
+                                       "9-Rodar query de SQL arbitrária\n"
+                                       "10-Sair\n"))
         except ValueError:
             print("opção inválida.\n")
             continue
         if received_input == EXIT:
             sys.exit(0)
+        if received_input == RUN_ARBITRARY_QUERY:
+            stmt = str(input("Digite a query que realizará a consulta:\n"))
+            run_query(stmt)
+            continue
+
         if received_input == PRINT_FILE:
             print(FileUtils.get_file_content(INI_PATH))
             continue
@@ -114,6 +122,12 @@ def create_database():
     content_as_tuple = FileUtils.get_file_content_as_tuple(INI_PATH)
     Database.insert_inventory(content_as_tuple)
     print("Dados inseridos com sucesso")
+
+
+def run_query(stmt):
+    rows = Database.run_query(stmt)
+    print(json.dumps( [dict(idx) for idx in rows], indent=4, ensure_ascii=False ))
+
 
 
 def insert_data():
