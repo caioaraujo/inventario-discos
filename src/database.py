@@ -173,6 +173,31 @@ class Database:
         finally:
             cur.close()
             conn.close()
+            
+    def normalize_ids():
+        """
+        Update all inventory ids ordered by letter and letter_seq
+        :return: None
+        """
+        conn = sqlite3.connect("../db/inventario.db")
+        cur = conn.cursor()
+        stmt_query = "SELECT letter, letter_seq FROM inventario ORDER BY letter, letter_seq"
+        try:
+            new_id = 1
+            id_list = []
+            for row in cur.execute(stmt_query):
+                id_list.append((new_id, row[0], row[1]))
+                new_id += 1
+        except sqlite3.OperationalError:
+            print("O banco de dados ainda não está criado. Favor criar o banco de dados")
+            cur.close()
+            conn.close()
+            return
+        update_stmt = "UPDATE inventario SET id = ? WHERE letter = ? AND letter_seq = ?"
+        cur.executemany(update_stmt, id_list)
+        conn.commit()
+        cur.close()
+        conn.close()
 
     @staticmethod
     def _get_previous_letter(letter):
@@ -183,19 +208,6 @@ class Database:
         previous_letter = all_letters[cur_letter_index-1]
         return previous_letter
 
-
-
-
-    @staticmethod
-    def _clean_interpreter(interpreter):
-        if interpreter.startswith("The "):
-            return interpreter[4:]
-        if interpreter.startswith("O ") or interpreter.startswith("A "):
-            return interpreter[2:]
-        if interpreter.startswith("Os ") or interpreter.startswith("As "):
-            return interpreter[3:]
-        return interpreter
-    
     @staticmethod
     def _drop_table(cursor):
         res = cursor.execute("SELECT EXISTS (SELECT name FROM sqlite_schema WHERE type='table' AND name='inventario')")

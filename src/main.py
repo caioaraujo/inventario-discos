@@ -84,7 +84,10 @@ def main():
             print("Opção inválida.")
             continue
         if received_input == EXPORT_TO_PDF:
-            filepath = input("Informe o caminho onde deseja salvar o arquivo:\n")
+            filepath = FileUtils.get_path_to_save_pdf(INI_PATH)
+            if not filepath:
+                filepath = input(f"Caminho para salvar o arquivo não encontrado."
+                                 f"Informe o caminho onde deseja salvar o arquivo:\n")
             if not filepath:
                 print("Caminho não especificado. Abortando operação.")
                 continue
@@ -94,9 +97,12 @@ def main():
                 continue
             inventory = Database.read_inventory()
             FileUtils.write_pdf(inventory, filepath)
+            print(f"Arquivo salvo com sucesso em: {filepath}")
             continue
         if received_input == EXPORT_TO_TXT:
-            filepath = input("Informe o caminho onde deseja salvar o arquivo:\n")
+            filepath = FileUtils.get_path_to_save_txt(INI_PATH)
+            if not filepath:
+                filepath = input("Informe o caminho onde deseja salvar o arquivo:\n")
             if not filepath:
                 print("Caminho não especificado. Abortando operação.")
                 continue
@@ -106,6 +112,7 @@ def main():
                 continue
             inventory = Database.read_inventory()
             FileUtils.write_txt(inventory, filepath)
+            print(f"Arquivo salvo com sucesso em: {filepath}")
             continue
         print("opção inválida.\n")
 
@@ -144,6 +151,7 @@ def insert_data():
     recorded_year = time.strftime("%y", time.localtime())
     data = ((record_id, recorded_year, letter, letter_seq, title, interpreter, date, volume, note),)
     Database.insert_inventory(data)
+    Database.normalize_ids()
 
 
 def update_data(numero):
@@ -157,6 +165,7 @@ def update_data(numero):
     data = ((letter, letter_seq, title, interpreter, date, volume, note, numero),)
     Database.normalize_sequence(letter, letter_seq)
     Database.update_inventory(data)
+    Database.normalize_ids()
 
 
 if __name__ == '__main__':
