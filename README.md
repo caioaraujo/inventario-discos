@@ -44,5 +44,17 @@ para geração de PDFs;
 - Configure o arquivo `setup.ini`;
 - Execute no seu ambiente de desenvolvimento `python src/main.py`.
 
+
+## Um passo extra que pode ser necessário
+
+Rodando o código no linux, eu tive que adicionar à variável de ambiente PYTHONPATH para que
+o código rodasse localmente:
+
+```
+export PYTHONPATH=/home/bufulin/Desktop/bufulink/inventario-discos/:$PYTHONPATH
+```
+
+Isso serve para que seja possível identificar o módulo `src`. 
+
 # Testes
 Execute no seu ambiente de desenvolvimento `python -m unittest` a partir da raíz do projeto.
