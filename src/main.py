@@ -118,11 +118,8 @@ def create_database():
 
 
 def run_query(stmt):
-    res = Database.run_query(stmt)
-    res_as_json = json.dumps(res, indent=4, ensure_ascii=False).encode('utf8')
-    print(res_as_json.decode())
-
-
+    rows = Database.run_query(stmt)
+    print(json.dumps( [dict(idx) for idx in rows], indent=4, ensure_ascii=False ))
 
 
 

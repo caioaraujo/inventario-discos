@@ -2,7 +2,6 @@ import sqlite3
 
 import src.static as static
 import traceback
-from dbutils import DBUtils
 
 
 import os
@@ -161,11 +160,11 @@ class Database:
     @staticmethod
     def run_query(stmt):
         conn =sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        conn.row_factory = DBUtils.row_to_dict
         try:
-            res=  cur.execute(stmt)
-            return res.fetchall()
+            rows = cur.execute(stmt)
+            return rows.fetchall()
         except sqlite3.OperationalError as e:
             print("erro na execução de query")
             print(e)
