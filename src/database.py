@@ -1,5 +1,7 @@
 import sqlite3
 
+import src.static as static
+
 
 class Database:
 
@@ -85,15 +87,26 @@ class Database:
         return result
 
     @staticmethod
-    def get_last_id():
+    def get_record_id(letter, letter_seq):
+        """
+        Get the current id
+
+        :param letter: Record letter
+        :param letter_seq: Sequence in this letter
+        :return: int
+        """
+        if letter_seq == 1:
+            if letter == "#":
+                return 1
+            letter = Database._get_previous_letter(letter)
         conn = sqlite3.connect("../db/inventario.db")
         cur = conn.cursor()
-        stmt = "SELECT max(id) FROM inventario"
+        stmt = "SELECT max(id) FROM inventario WHERE letter = :letter"
         try:
-            res = cur.execute(stmt)
+            res = cur.execute(stmt, {"letter": letter})
             res = res.fetchone()
-            if len(res):
-                return res[0]
+            if res[0]:
+                return res[0] + 1
             return 1
         except sqlite3.OperationalError:
             print("O banco de dados ainda não está criado. Favor criar o banco de dados")
@@ -121,7 +134,7 @@ class Database:
     @staticmethod
     def normalize_sequence(letter, letter_seq):
         """
-        Increment all records after the given letter_seq in given letter, sorted by interpreter and date.
+        Increment all records after the given letter_seq in given letter.
 
         :param letter: Interpreter letter
         :param letter_seq: Current sequential. All sequentials after this number will be incremented.
@@ -136,6 +149,15 @@ class Database:
         conn.commit()
         cur.close()
         conn.close()
+
+    @staticmethod
+    def _get_previous_letter(letter):
+        if letter == "A":
+            return "#"
+        all_letters = static.ALPHABET
+        cur_letter_index = all_letters.index(letter)
+        previous_letter = all_letters[cur_letter_index-1]
+        return previous_letter
 
     @staticmethod
     def _clean_interpreter(interpreter):

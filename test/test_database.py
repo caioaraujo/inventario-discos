@@ -113,14 +113,32 @@ class TestDatabase(unittest.TestCase):
         execute_mock.assert_called_once_with(expected_stmt, {"id": 1})
 
     @mock.patch("src.database.sqlite3.connect")
-    def test_get_last_id(self, connect_mock):
+    def test_get_record_id_when_letter_seq_is_one_and_letter_is_numeric(self, connect_mock):
         cursor_mock = connect_mock().cursor()
         execute_mock = cursor_mock.execute
-        expected_stmt = "SELECT max(id) FROM inventario"
-        execute_mock.return_value.fetchone.return_value = (1,)
-        obtained = self._database.get_last_id()
+        obtained = self._database.get_record_id("#", 1)
         self.assertEqual(1, obtained)
-        execute_mock.assert_called_once_with(expected_stmt)
+        execute_mock.assert_not_called()
+
+    @mock.patch("src.database.sqlite3.connect")
+    def test_get_record_id_when_letter_seq_is_one_and_letter_is_not_numeric(self, connect_mock):
+        cursor_mock = connect_mock().cursor()
+        execute_mock = cursor_mock.execute
+        expected_stmt = "SELECT max(id) FROM inventario WHERE letter = :letter"
+        execute_mock.return_value.fetchone.return_value = (17,)
+        obtained = self._database.get_record_id("A", 1)
+        self.assertEqual(18, obtained)
+        execute_mock.assert_called_with(expected_stmt, {"letter": "#"})
+
+    @mock.patch("src.database.sqlite3.connect")
+    def test_get_record_id_when_letter_seq_is_not_one_and_letter_is_not_numeric(self, connect_mock):
+        cursor_mock = connect_mock().cursor()
+        execute_mock = cursor_mock.execute
+        expected_stmt = "SELECT max(id) FROM inventario WHERE letter = :letter"
+        execute_mock.return_value.fetchone.return_value = (44,)
+        obtained = self._database.get_record_id("B", 8)
+        self.assertEqual(45, obtained)
+        execute_mock.assert_called_once_with(expected_stmt, {"letter": "B"})
 
     @mock.patch("src.database.sqlite3.connect")
     def test_get_last_letter_seq(self, connect_mock):

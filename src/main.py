@@ -117,8 +117,6 @@ def insert_data():
     letter = input("(opcional) Qual a letra da ordem alfabética?:\n")
     letter_seq = input("(opcional) Qual a sequência numérica da letra correspondente?\n")
     note = input("(opcional) Alguma observação?:\n")
-    last_id = Database.get_last_id()
-    new_id = last_id + 1
     if not letter:
         letter = FileUtils.get_first_letter(interpreter)
     letter = letter.upper()
@@ -128,8 +126,9 @@ def insert_data():
     else:
         letter_seq = int(letter_seq)
         Database.normalize_sequence(letter, letter_seq)
+    record_id = Database.get_record_id(letter, letter_seq)
     recorded_year = time.strftime("%y", time.localtime())
-    data = ((new_id, recorded_year, letter, letter_seq, title, interpreter, date, volume, note),)
+    data = ((record_id, recorded_year, letter, letter_seq, title, interpreter, date, volume, note),)
     Database.insert_inventory(data)
 
 

@@ -5,11 +5,10 @@ import re
 import jinja2
 import pdfkit
 
+import src.static as static
+
 
 class FileUtils:
-
-    ALPHABET = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
-                "T", "U", "V", "W", "X", "Y", "Z"]
 
     @staticmethod
     def get_file_path(ini_file):
@@ -20,7 +19,7 @@ class FileUtils:
     @staticmethod
     def get_file_content(ini_file):
         filepath = FileUtils.get_file_path(ini_file)
-        with open(filepath, 'r', encoding='utf-8') as file:
+        with open(filepath, 'r', encoding=static.ENCODING) as file:
             return " ".join(file.readlines())
 
     @staticmethod
@@ -137,7 +136,7 @@ class FileUtils:
         if not filedir.endswith("/"):
             filedir = filedir + "/"
         filepath = FileUtils._get_filepath(filedir, "txt")
-        with open(filepath, "w", encoding='utf-8') as output:
+        with open(filepath, "w", encoding=static.ENCODING) as output:
             for data in inventory:
                 id_zfilled = str(data["id"]).zfill(5)
                 year_zfilled = data["recorded_year"].zfill(3)
@@ -160,7 +159,7 @@ class FileUtils:
         template_env = jinja2.Environment(loader=template_loader)
         template = template_env.get_template("template_pdf.html")
         context = {"volumes_numerais": [i for i in inventory if i["letter"] == "#"]}
-        for letter in FileUtils.ALPHABET:
+        for letter in static.ALPHABET:
             context_key = f"volumes_{letter.lower()}"
             context[context_key] = [i for i in inventory if i["letter"] == letter]
         output_text = template.render(context)
