@@ -160,16 +160,6 @@ class Database:
         return previous_letter
 
     @staticmethod
-    def _clean_interpreter(interpreter):
-        if interpreter.startswith("The "):
-            return interpreter[4:]
-        if interpreter.startswith("O ") or interpreter.startswith("A "):
-            return interpreter[2:]
-        if interpreter.startswith("Os ") or interpreter.startswith("As "):
-            return interpreter[3:]
-        return interpreter
-
-    @staticmethod
     def _drop_table(cursor):
         res = cursor.execute("SELECT EXISTS (SELECT name FROM sqlite_schema WHERE type='table' AND name='inventario')")
         table_exists = res.fetchone()[0]
