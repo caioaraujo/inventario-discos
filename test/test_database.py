@@ -52,6 +52,14 @@ class TestDatabase(unittest.TestCase):
         executemany_mock.assert_called_once_with(expected_stmt, expected_data)
 
     @mock.patch("src.database.sqlite3.connect")
+    def test_delete_inventory(self, connect_mock):
+        cursor_mock = connect_mock().cursor()
+        execute_mock = cursor_mock.execute
+        expected_stmt = "delete FROM inventario WHERE id = :id"
+        self._database.delete_inventory(5)
+        execute_mock.assert_called_once_with(expected_stmt, {"id": 5})
+
+    @mock.patch("src.database.sqlite3.connect")
     def test_read_inventory(self, connect_mock):
         cursor_mock = connect_mock().cursor()
         execute_mock = cursor_mock.execute
