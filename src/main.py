@@ -16,7 +16,8 @@ UPDATE = 6
 EXPORT_TO_PDF = 7
 EXPORT_TO_TXT = 8
 RUN_ARBITRARY_QUERY = 9
-EXIT = 10
+DELETE = 10
+EXIT = 11
 
 
 
@@ -34,7 +35,8 @@ def main():
                                        "7-Exportar para PDF\n"
                                        "8-Exportar para TXT\n"
                                        "9-Rodar query de SQL arbitrária\n"
-                                       "10-Sair\n"))
+                                       "10-Deletar registro\n"
+                                       "11-Sair\n"))
         except ValueError:
             print("opção inválida.\n")
             continue
@@ -80,6 +82,23 @@ def main():
             if answer in ("s", "S"):
                 update_data(numero)
                 print("Dados alterados com sucesso.")
+                continue
+            print("Opção inválida.")
+            continue
+        if received_input == DELETE:
+            numero = int(input("Digite o número do registro que deseja remover:\n"))
+            record = Database.fetch(numero)
+            if not record:
+                print(f"Nenhum registro encontrado pelo número {numero}.")
+                continue
+            print(f"Registro encontrado: \n{record}")
+            answer = input("Deseja remover esse registro: (s/n):")
+            if answer in ("n", "N"):
+                continue
+            if answer in ("s", "S"):
+                Database.delete_inventory(numero)
+                Database.normalize_ids()
+                print("Dado removido com sucesso.")
                 continue
             print("Opção inválida.")
             continue

@@ -24,6 +24,8 @@ A opção 7 gera o PDF com os dados.
 
 A opção 8 gera um arquivo txt somente com os dados.
 
+A opção 10 deleta um registro pelo número sequencial.
+
 Por fim, a opção 9 finaliza o programa.
 
 Após inserir ou atualizar um registro, caso seja especificado a letra e o número da ordem alfabética, todos os registros

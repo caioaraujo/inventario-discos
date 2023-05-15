@@ -47,6 +47,16 @@ class Database:
         conn.close()
 
     @staticmethod
+    def delete_inventory(record_id):
+        conn = sqlite3.connect(db_path)
+        stmt = "delete FROM inventario WHERE id = :id"
+        cur = conn.cursor()
+        cur.execute(stmt, {"id": record_id})
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    @staticmethod
     def read_inventory():
         conn =sqlite3.connect(db_path)
         cur = conn.cursor()
@@ -180,7 +190,7 @@ class Database:
         Update all inventory ids ordered by letter and letter_seq
         :return: None
         """
-        conn = sqlite3.connect("../db/inventario.db")
+        conn = sqlite3.connect(db_path)
         cur = conn.cursor()
         stmt_query = "SELECT letter, letter_seq FROM inventario ORDER BY letter, letter_seq"
         try:
